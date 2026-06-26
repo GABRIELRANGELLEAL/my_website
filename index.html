@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Rangel Leal | AI / Data Engineer</title>
+    <meta name="description" content="Portfolio of Gabriel Rangel Leal, AI / Data Engineer specializing in scalable pipelines, multi-agent systems, and LLM backends.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#050505',
+                        surface: '#0A0A0B',
+                        raised: '#121214',
+                        ember: {
+                            DEFAULT: '#FF5722',
+                            light: '#FF8A65',
+                            dark: '#E64A19',
+                            fill: 'rgba(255, 87, 34, 0.1)',
+                            border: 'rgba(255, 87, 34, 0.25)',
+                        },
+                        snow: '#FAFAFA',
+                        ash: '#A1A1AA',
+                        stone: '#71717A',
+                        muted: '#52525B',
+                        borderSubtle: 'rgba(255, 255, 255, 0.08)',
+                        borderHover: 'rgba(255, 255, 255, 0.15)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0zm1 1h38v38H1V1z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E\")",
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    },
+                    maxWidth: {
+                        'content': '1100px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-display {
+                @apply text-[36px] sm:text-[48px] lg:text-[56px] font-bold text-snow leading-[1.1] tracking-tight;
+            }
+            .text-h1 {
+                @apply text-[28px] sm:text-[32px] font-bold text-snow leading-tight tracking-tight;
+            }
+            .text-h2 {
+                @apply text-[20px] sm:text-[24px] font-semibold text-snow leading-snug tracking-tight;
+            }
+            .text-h3 {
+                @apply text-[16px] sm:text-[18px] font-semibold text-snow leading-snug;
+            }
+            .text-body {
+                @apply text-[15px] sm:text-[16px] font-light text-ash leading-relaxed;
+            }
+            
+            /* Section Label Decorator */
+            .section-label {
+                @apply flex items-center gap-4 text-[12px] font-mono text-muted mb-10 text-snow uppercase tracking-widest;
+            }
+            .section-label::after {
+                content: '';
+                @apply flex-grow h-[1px] bg-gradient-to-r from-borderSubtle to-transparent max-w-[200px];
+            }
+            
+            /* Modern Badges & Pills */
+            .badge-ember {
+                @apply bg-ember-fill text-ember border border-ember-border rounded-full px-4 py-1.5 text-[11px] sm:text-[12px] uppercase tracking-widest font-semibold backdrop-blur-sm shadow-[0_0_15px_rgba(255,87,34,0.1)];
+            }
+            .tag-tech {
+                @apply font-mono text-[11px] sm:text-[12px] text-snow/80 bg-white/[0.03] border border-white/[0.08] rounded-full px-3 py-1 hover:bg-white/[0.08] hover:text-snow hover:border-white/[0.2] transition-all duration-300 ease-out hover:scale-[1.05] active:scale-95 backdrop-blur-sm;
+            }
+
+            /* Scroll Reveal */
+            .reveal {
+                opacity: 0;
+                transform: translateY(24px);
+                transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .reveal.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Glass Cards - Updated with microinteractions */
+            .glass-card {
+                @apply bg-surface/40 backdrop-blur-md border border-borderSubtle rounded-2xl transition-all duration-300 ease-out hover:border-borderHover hover:-translate-y-1 hover:scale-[1.01] active:scale-[0.99] hover:shadow-[0_8px_30px_rgba(255,87,34,0.06)];
+            }
+        }
+
+        body {
+            background-color: theme('colors.void');
+            color: theme('colors.ash');
+            cursor: none; 
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.void');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.muted');
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.stone');
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: theme('colors.ember.DEFAULT');
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.15s ease-out, height 0.15s ease-out, background-color 0.15s ease-out, transform 0.1s ease-out;
+            box-shadow: 0 0 10px theme('colors.ember.DEFAULT');
+            mix-blend-mode: screen;
+        }
+        #custom-cursor.hovering {
+            width: 40px;
+            height: 40px;
+            background-color: theme('colors.ember.fill');
+            border: 1px solid theme('colors.ember.DEFAULT');
+            box-shadow: none;
+        }
+        #custom-cursor.clicking {
+            transform: translate(-50%, -50%) scale(0.7);
+            background-color: theme('colors.ember.DEFAULT');
+        }
+
+        /* Skeleton Loading System */
+        .skeleton-overlay {
+            position: relative;
+            overflow: hidden;
+        }
+        .skeleton-overlay::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            z-index: 40;
+            background-color: theme('colors.surface');
+            border-radius: inherit;
+        }
+        .skeleton-overlay::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            z-index: 41;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+            animation: skeleton-shimmer 1.5s infinite;
+            border-radius: inherit;
+        }
+        /* Reveal states after JS removes "is-loading" from body */
+        body:not(.is-loading) .skeleton-overlay::before,
+        body:not(.is-loading) .skeleton-overlay::after {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes skeleton-shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+            .animate-spin-slow { animation: none !important; }
+            .skeleton-overlay::after { animation: none !important; }
+        }
+        
+        @media (hover: none) and (pointer: coarse) {
+            #custom-cursor { display: none !important; }
+            body { cursor: auto !important; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-ember selection:text-void bg-grid-pattern bg-fixed is-loading">
+
+    <!-- Subtle Background Glow -->
+    <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-ember/10 blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-info/5 blur-[120px] pointer-events-none z-0"></div>
+
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-ember text-white px-4 py-2 rounded-md z-[1000]">
+        Skip to content
+    </a>
+
+    <div id="custom-cursor"></div>
+
+    <header class="fixed top-0 w-full z-[100] bg-void/60 backdrop-blur-xl border-b border-borderSubtle transition-all duration-300">
+        <div class="max-w-content mx-auto px-6 sm:px-12 h-16 flex items-center justify-between md:justify-end">
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-snow text-xl p-2 outline-none transition-transform duration-300 active:scale-90" aria-expanded="false" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex gap-8 items-center" aria-label="Main Navigation">
+                <a href="#home" class="text-[13px] font-mono text-snow transition-all duration-300 ease-out hover:text-ember hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-ember rounded px-1">00. Home</a>
+                <a href="#projects" class="text-[13px] font-mono text-stone transition-all duration-300 ease-out hover:text-snow hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-snow rounded px-1">01. Projects</a>
+                <a href="#experience" class="text-[13px] font-mono text-stone transition-all duration-300 ease-out hover:text-snow hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-snow rounded px-1">02. Experience</a>
+                <a href="#contact" class="text-[13px] font-mono text-stone transition-all duration-300 ease-out hover:text-snow hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-snow rounded px-1">03. Contact</a>
+            </nav>
+        </div>
+
+        <!-- Mobile Nav Dropdown -->
+        <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-raised/95 backdrop-blur-lg border-b border-borderSubtle flex flex-col p-6 gap-6 shadow-2xl">
+            <a href="#home" class="text-[14px] font-mono text-snow mobile-link active:scale-95 transition-transform origin-left">00. Home</a>
+            <a href="#projects" class="text-[14px] font-mono text-stone hover:text-snow mobile-link active:scale-95 transition-transform origin-left">01. Projects</a>
+            <a href="#experience" class="text-[14px] font-mono text-stone hover:text-snow mobile-link active:scale-95 transition-transform origin-left">02. Experience</a>
+            <a href="#contact" class="text-[14px] font-mono text-stone hover:text-snow mobile-link active:scale-95 transition-transform origin-left">03. Contact</a>
+        </div>
+    </header>
+
+    <main id="main-content" class="pt-24 sm:pt-32 pb-8 outline-none relative z-10" tabindex="-1">
+        
+        <!-- HERO SECTION -->
+        <section id="home" class="max-w-content mx-auto px-6 sm:px-12 flex flex-col lg:flex-row items-center justify-between gap-12 pt-4 pb-20" aria-label="Hero">
+            
+            <div class="flex-1 w-full flex flex-col items-center lg:items-start text-center lg:text-left">
+                <div class="reveal skeleton-overlay rounded-full" style="transition-delay: 0ms;">
+                    <span class="badge-ember inline-block mb-6 relative z-50">AI / DATA ENGINEER</span>
+                </div>
+                
+                <div class="reveal skeleton-overlay rounded-lg w-full max-w-[600px] mb-6" style="transition-delay: 100ms;">
+                    <h1 class="text-display relative z-50">
+                        Architecting Data Pipelines.<br>
+                        Building <span class="bg-gradient-to-r from-ember to-ember-light bg-clip-text text-transparent">AI Agents.</span>
+                    </h1>
+                </div>
+                
+                <div class="reveal skeleton-overlay rounded-lg mb-10 w-fit" style="transition-delay: 200ms;">
+                    <p class="text-body text-[16px] sm:text-[18px] max-w-lg relative z-50">
+                        Data pipelines <span class="text-stone mx-2 font-light">/</span> Agentic Pipelines <span class="text-stone mx-2 font-light">/</span> Analytics
+                    </p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-5 mb-12 reveal w-full sm:w-auto" style="transition-delay: 300ms;">
+                    <a href="mailto:gabrielrangelleal@gmail.com" class="bg-snow text-void hover:bg-white rounded-full px-8 py-3.5 text-[14px] font-semibold transition-all duration-300 ease-out hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] outline-none focus-visible:ring-4 focus-visible:ring-snow/50 flex items-center justify-center gap-2">
+                        Say Hello <i class="fa-regular fa-paper-plane text-sm transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"></i>
+                    </a>
+                    <a href="CV_-_05_26_full.pdf" download class="bg-transparent border border-borderSubtle text-snow hover:bg-white/[0.05] hover:border-borderHover rounded-full px-8 py-3.5 text-[14px] font-semibold transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.98] outline-none focus-visible:ring-4 focus-visible:ring-snow/30 flex items-center justify-center gap-2">
+                        Download CV <i class="fa-solid fa-arrow-down text-sm"></i>
+                    </a>
+                </div>
+
+                <!-- Tech Stack -->
+                <div class="flex flex-col items-center lg:items-start gap-4 reveal w-full skeleton-overlay rounded-xl p-1 -m-1" style="transition-delay: 400ms;">
+                    <div class="relative z-50 w-full text-center lg:text-left">
+                        <span class="text-[11px] font-mono text-muted uppercase tracking-[0.2em] block mb-2">CORE STACK</span>
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-2.5 max-w-[500px]">
+                            <span class="tag-tech">python</span>
+                            <span class="tag-tech">databricks</span>
+                            <span class="tag-tech">spark</span>
+                            <span class="tag-tech">sql</span>
+                            <span class="tag-tech">fastapi</span>
+                            <span class="tag-tech">postgres</span>
+                            <span class="tag-tech">RAG</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image -->
+            <div class="flex-1 w-full flex flex-col items-center lg:items-end relative reveal" style="transition-delay: 200ms;">
+                <div class="relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] flex items-center justify-center mb-6 group skeleton-overlay rounded-full">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-ember/20 to-transparent blur-2xl group-hover:blur-3xl transition-all duration-700 relative z-50"></div>
+                    <div class="absolute w-full h-full rounded-full border border-borderSubtle animate-[spin_40s_linear_infinite] relative z-50" aria-hidden="true"></div>
+                    <div class="absolute w-[85%] h-[85%] rounded-full border border-borderSubtle animate-[spin_30s_linear_infinite_reverse] relative z-50" aria-hidden="true"></div>
+                    
+                    <div class="relative z-50 w-[70%] h-[70%] rounded-full p-1 bg-gradient-to-br from-ember to-void transition-transform duration-500 hover:scale-[1.03]">
+                        <div class="w-full h-full rounded-full overflow-hidden bg-surface">
+                            <!-- Note: Placeholder image path kept as original -->
+                            <img src="Gemini_Generated_Image_eyf9jreyf9jreyf9.png" alt="Photo of Gabriel Rangel Leal" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-[1.01] group-hover:scale-[1.05]">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center lg:text-center w-[280px] sm:w-[360px] z-10 skeleton-overlay rounded-lg">
+                    <h2 class="text-[28px] font-bold text-snow tracking-tight mb-1 relative z-50">Gabriel Leal</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS SECTION -->
+        <section id="projects" class="max-w-content mx-auto px-6 sm:px-12 py-20" aria-label="Projects">
+            <h2 class="section-label reveal">01 — Projects</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <article class="group glass-card p-8 flex flex-col h-full reveal skeleton-overlay" style="transition-delay: 0ms;">
+                    <div class="relative z-50 flex flex-col h-full">
+                        <span class="text-[11px] font-mono tracking-widest text-ember mb-4 block transition-colors duration-300">AGENTIC AI</span>
+                        <h3 class="text-h2 mb-4 group-hover:text-ember transition-colors duration-300">Autonomous Data Analytics Agentic Pipeline</h3>
+                        <p class="text-body mb-8 flex-grow">
+                            Developing an agentic AI pipeline using multi-agent architecture using Python, FastAPI, PostgreSQL, and OpenAI/Anthropic APIs to automate business analysis requests and reduce dependency on technical teams by enabling self-service analytics through a conversational interface.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tag-tech">python</span><span class="tag-tech">fastapi</span><span class="tag-tech">postgresql</span><span class="tag-tech">openai</span><span class="tag-tech">anthropic</span>
+                        </div>
+                        <a href="https://github.com/GABRIELRANGELLEAL/AI_engineer" target="_blank" class="text-[13px] font-medium text-snow inline-flex items-center gap-2 group/link w-max mt-auto outline-none focus-visible:ring-2 focus-visible:ring-ember rounded px-1 py-0.5">
+                            View on GitHub <i class="fa-solid fa-arrow-right text-[10px] text-ember transition-transform duration-300 ease-out group-hover/link:translate-x-1.5"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="group glass-card p-8 flex flex-col h-full reveal skeleton-overlay" style="transition-delay: 100ms;">
+                    <div class="relative z-50 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[11px] font-mono tracking-widest text-ember block transition-colors duration-300">DATA ENGINEERING</span>
+                            <span class="text-[10px] font-mono text-[#22C55E] bg-[#22C55E]/10 border border-[#22C55E]/20 px-2.5 py-1 rounded-full transition-transform duration-300 group-hover:scale-105">3h → 5min</span>
+                        </div>
+                        <h3 class="text-h2 mb-4 group-hover:text-ember transition-colors duration-300">Automating Clienteling List Generation</h3>
+                        <p class="text-body mb-8 flex-grow">
+                            Automated a legacy CRM analytics pipeline by migrating SAS workflows to Databricks/PySpark, improving scalability and maintainability through reusable Python classes. Reduced campaign list generation time from 3 hours to 5-10 minutes, saving over 40 hours of monthly operational effort.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tag-tech">databricks</span><span class="tag-tech">pyspark</span><span class="tag-tech">python</span><span class="tag-tech">sql-server</span>
+                        </div>
+                        <a href="https://github.com/GABRIELRANGELLEAL/AI_engineer" target="_blank" class="text-[13px] font-medium text-snow inline-flex items-center gap-2 group/link w-max mt-auto outline-none focus-visible:ring-2 focus-visible:ring-ember rounded px-1 py-0.5">
+                            View on GitHub <i class="fa-solid fa-arrow-right text-[10px] text-ember transition-transform duration-300 ease-out group-hover/link:translate-x-1.5"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="group glass-card p-8 flex flex-col h-full reveal skeleton-overlay" style="transition-delay: 200ms;">
+                    <div class="relative z-50 flex flex-col h-full">
+                        <span class="text-[11px] font-mono tracking-widest text-ember mb-4 block transition-colors duration-300">ARCHITECTURE</span>
+                        <h3 class="text-h2 mb-4 group-hover:text-ember transition-colors duration-300">End-to-End Analytics Architecture</h3>
+                        <p class="text-body mb-8 flex-grow">
+                            Migrated a legacy architecture from SQL Server procedures and Tableau to a scalable Databricks/PySpark and Power BI solution, improving performance, maintainability, and cost efficiency. Built a layered data pipeline architecture with centralized metric logic, reusable Python classes, and parallelized Databricks jobs.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tag-tech">databricks</span><span class="tag-tech">pyspark</span><span class="tag-tech">power-bi</span><span class="tag-tech">python</span>
+                        </div>
+                        <a href="https://github.com/GABRIELRANGELLEAL/AI_engineer" target="_blank" class="text-[13px] font-medium text-snow inline-flex items-center gap-2 group/link w-max mt-auto outline-none focus-visible:ring-2 focus-visible:ring-ember rounded px-1 py-0.5">
+                            View on GitHub <i class="fa-solid fa-arrow-right text-[10px] text-ember transition-transform duration-300 ease-out group-hover/link:translate-x-1.5"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE SECTION -->
+        <section id="experience" class="max-w-content mx-auto px-6 sm:px-12 py-20" aria-label="Professional Experience">
+            <h2 class="section-label reveal">02 — Experience</h2>
+
+            <div class="relative pl-6 sm:pl-10 max-w-4xl border-l border-borderSubtle ml-2 md:ml-4 space-y-20 mt-12">
+                
+                <!-- Experience Item 1 -->
+                <div class="relative reveal group skeleton-overlay rounded-2xl p-4 -mx-4 -mt-4" style="transition-delay: 0ms;">
+                    <div class="relative z-50 transition-transform duration-300 ease-out group-hover:translate-x-1.5">
+                        <div class="absolute -left-[45px] sm:-left-[61px] top-1.5 w-3.5 h-3.5 rounded-full bg-ember shadow-[0_0_15px_rgba(255,87,34,0.6)] ring-4 ring-void transition-transform duration-300 ease-out group-hover:scale-125 group-hover:shadow-[0_0_20px_rgba(255,87,34,0.9)]"></div>
+                        
+                        <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2 gap-2">
+                            <h3 class="text-h2 text-snow transition-colors duration-300 group-hover:text-ember">Data Engineer</h3>
+                            <span class="text-[13px] font-mono text-ember bg-ember-fill px-3 py-1 rounded-full w-max transition-transform duration-300 group-hover:scale-105">Jun 2023 — Present</span>
+                        </div>
+                        <h4 class="text-[16px] text-stone font-medium mb-6 transition-colors duration-300 group-hover:text-snow">Keep it Simple (KIS) → Global Beauty Company</h4>
+                        
+                        <div class="text-body mb-6 space-y-4">
+                            <p>Allocated to a global beauty company, working across data engineering and analytics initiatives supporting customer intelligence, KPI standardization, experimentation, and executive reporting.</p>
+                            <ul class="space-y-2">
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-ember text-[10px] mt-1.5"></i> <span>Designed and maintained scalable data pipelines using Python, Spark, and SQL Server.</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-ember text-[10px] mt-1.5"></i> <span>Built end-to-end analytical workflows using Databricks, transforming raw data into curated datasets and Power BI dashboards.</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-ember text-[10px] mt-1.5"></i> <span>Implemented data quality, validation, and preprocessing layers.</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-ember text-[10px] mt-1.5"></i> <span>Supported experimentation and advanced analytics initiatives.</span></li>
+                            </ul>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="tag-tech">Databricks</span><span class="tag-tech">Spark</span><span class="tag-tech">Python</span><span class="tag-tech">SQL Server</span><span class="tag-tech">Power BI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Item 2 -->
+                <div class="relative reveal group skeleton-overlay rounded-2xl p-4 -mx-4 -mt-4" style="transition-delay: 100ms;">
+                    <div class="relative z-50 transition-transform duration-300 ease-out group-hover:translate-x-1.5">
+                        <div class="absolute -left-[45px] sm:-left-[61px] top-1.5 w-3.5 h-3.5 rounded-full bg-borderSubtle border-2 border-muted ring-4 ring-void group-hover:bg-snow group-hover:border-snow group-hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] transition-all duration-300 ease-out group-hover:scale-125"></div>
+                        
+                        <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2 gap-2">
+                            <h3 class="text-h2 text-snow transition-colors duration-300 group-hover:text-white">Analytics Engineer</h3>
+                            <span class="text-[13px] font-mono text-muted w-max transition-colors duration-300 group-hover:text-snow">Dec 2021 — May 2023</span>
+                        </div>
+                        <h4 class="text-[16px] text-stone font-medium mb-6 transition-colors duration-300 group-hover:text-snow">Warren</h4>
+                        
+                        <div class="text-body mb-6 space-y-4">
+                            <p>Supported product, banking, and growth teams by building KPI dashboards, writing complex SQL for business-critical analyses, and implementing feature-tracking analytics.</p>
+                            <ul class="space-y-2">
+                                <li class="flex items-start gap-3 group/item"><i class="fa-solid fa-check text-muted text-[10px] mt-1.5 transition-colors duration-300 group-hover/item:text-snow"></i> <span>Developed scalable KPI data models and reporting pipelines.</span></li>
+                                <li class="flex items-start gap-3 group/item"><i class="fa-solid fa-check text-muted text-[10px] mt-1.5 transition-colors duration-300 group-hover/item:text-snow"></i> <span>Developed optimized SQL transformations and analytical datasets.</span></li>
+                                <li class="flex items-start gap-3 group/item"><i class="fa-solid fa-check text-muted text-[10px] mt-1.5 transition-colors duration-300 group-hover/item:text-snow"></i> <span>Implemented event-tracking and analytical data structures.</span></li>
+                            </ul>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="tag-tech">MySQL</span><span class="tag-tech">Python</span><span class="tag-tech">Looker</span><span class="tag-tech">Metabase</span><span class="tag-tech">Amplitude</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Item 3 -->
+                <div class="relative reveal group skeleton-overlay rounded-2xl p-4 -mx-4 -mt-4" style="transition-delay: 200ms;">
+                    <div class="relative z-50 transition-transform duration-300 ease-out group-hover:translate-x-1.5">
+                        <div class="absolute -left-[45px] sm:-left-[61px] top-1.5 w-3.5 h-3.5 rounded-full bg-borderSubtle border-2 border-muted ring-4 ring-void group-hover:bg-snow group-hover:border-snow group-hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] transition-all duration-300 ease-out group-hover:scale-125"></div>
+                        
+                        <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2 gap-2">
+                            <h3 class="text-h2 text-snow transition-colors duration-300 group-hover:text-white">Data Analyst</h3>
+                            <span class="text-[13px] font-mono text-muted w-max transition-colors duration-300 group-hover:text-snow">Feb 2021 — Dec 2021</span>
+                        </div>
+                        <h4 class="text-[16px] text-stone font-medium mb-6 transition-colors duration-300 group-hover:text-snow">RBS Group</h4>
+                        
+                        <div class="text-body mb-6 space-y-4">
+                            <p>RBS is one of the largest companies in the field of multimedia communication in Brazil. Supported editorial decision-making by analyzing audience behavior and identifying content that generated higher engagement.</p>
+                            <ul class="space-y-2">
+                                <li class="flex items-start gap-3 group/item"><i class="fa-solid fa-check text-muted text-[10px] mt-1.5 transition-colors duration-300 group-hover/item:text-snow"></i> <span>Built and optimized complex SQL queries using MySQL and BigQuery.</span></li>
+                                <li class="flex items-start gap-3 group/item"><i class="fa-solid fa-check text-muted text-[10px] mt-1.5 transition-colors duration-300 group-hover/item:text-snow"></i> <span>Refactored and migrated legacy analytical queries from Oracle SQL.</span></li>
+                                <li class="flex items-start gap-3 group/item"><i class="fa-solid fa-check text-muted text-[10px] mt-1.5 transition-colors duration-300 group-hover/item:text-snow"></i> <span>Developed KPI dashboards for the editorial team using Google Data Studio.</span></li>
+                            </ul>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="tag-tech">MySQL</span><span class="tag-tech">BigQuery</span><span class="tag-tech">Oracle SQL</span><span class="tag-tech">Google Data Studio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="max-w-content mx-auto px-6 sm:px-12 py-24 text-center reveal" aria-label="Contact">
+            <div class="glass-card p-12 lg:p-20 relative overflow-hidden rounded-[2rem] skeleton-overlay group hover:scale-[1.005]">
+                <div class="relative z-50">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[2px] bg-gradient-to-r from-transparent via-ember to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-100"></div>
+                    
+                    <h2 class="text-[32px] sm:text-[40px] font-bold text-snow tracking-tight mb-6">Let's build something together.</h2>
+                    
+                    <p class="text-body mb-10 max-w-lg mx-auto">
+                        Currently open for new opportunities or collaborations on interesting AI and Data engineering projects. Let's chat!
+                    </p>
+
+                    <div class="flex items-center justify-center gap-6">
+                        <a href="https://linkedin.com/in/gabriel-r-leal" target="_blank" aria-label="LinkedIn" class="w-12 h-12 rounded-full bg-white/[0.03] border border-borderSubtle flex items-center justify-center text-snow transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.1] active:scale-[0.9] hover:bg-ember hover:border-ember hover:shadow-[0_0_20px_rgba(255,87,34,0.4)] focus-visible:ring-2 focus-visible:ring-snow outline-none">
+                            <i class="fa-brands fa-linkedin-in text-lg"></i>
+                        </a>
+                        <a href="https://github.com/GABRIELRANGELLEAL" target="_blank" aria-label="GitHub" class="w-12 h-12 rounded-full bg-white/[0.03] border border-borderSubtle flex items-center justify-center text-snow transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.1] active:scale-[0.9] hover:bg-ember hover:border-ember hover:shadow-[0_0_20px_rgba(255,87,34,0.4)] focus-visible:ring-2 focus-visible:ring-snow outline-none">
+                            <i class="fa-brands fa-github text-lg"></i>
+                        </a>
+                        <a href="mailto:gabrielrangelleal@gmail.com" aria-label="Email" class="w-12 h-12 rounded-full bg-white/[0.03] border border-borderSubtle flex items-center justify-center text-snow transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.1] active:scale-[0.9] hover:bg-ember hover:border-ember hover:shadow-[0_0_20px_rgba(255,87,34,0.4)] focus-visible:ring-2 focus-visible:ring-snow outline-none">
+                            <i class="fa-solid fa-envelope text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-borderSubtle py-8 text-center bg-surface/50 backdrop-blur-sm">
+        <div class="max-w-content mx-auto px-6 sm:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-[13px] text-stone">© <span id="year"></span> Gabriel Rangel Leal. All rights reserved.</p>
+            <p class="font-mono text-[11px] text-muted tracking-widest">DESIGN REIMAGINED</p>
+        </div>
+    </footer>
+
+    <script>
+        // Skeleton logic - simulating data load for smooth reveal
+        document.addEventListener('DOMContentLoaded', () => {
+            // Remove the loading state after a slight delay to show off the skeleton animation
+            setTimeout(() => {
+                document.body.classList.remove('is-loading');
+            }, 1200); 
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+            mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!prefersReducedMotion) {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        } else {
+            revealElements.forEach(el => el.classList.add('active'));
+        }
+
+        const cursor = document.getElementById('custom-cursor');
+        const isTouchDevice = () => (('ontouchstart' in window) || (navigator.maxTouchPoints > 0));
+
+        if (!isTouchDevice() && !prefersReducedMotion) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Expand cursor on hover
+            const interactables = document.querySelectorAll('a, button, input, textarea, .glass-card, .tag-tech');
+            interactables.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hovering');
+                    cursor.classList.remove('clicking');
+                });
+            });
+
+            // Tactile feedback on click
+            document.addEventListener('mousedown', () => {
+                if(cursor.classList.contains('hovering')) {
+                    cursor.classList.add('clicking');
+                }
+            });
+            document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
+        }
+    </script>
+</body>
+</html>
