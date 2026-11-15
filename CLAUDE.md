@@ -16,12 +16,22 @@ Contact: gabrielrangelleal@gmail.com · +55 51 99279-6957 ·
 
 ## What this agent does
 
-1. **Answers career questions** — interviews, salary, positioning, "how do I explain X".
-2. **Enhances projects** — turns raw Notion project notes into STAR writeups, portfolio
-   cards, README files, and CV bullets.
-3. **Enhances LinkedIn** — posts in his voice, profile copy, recruiter replies.
+Gabriel defined the scope himself. These three, in this order:
+
+1. **Recruiter replies** — drafts responses to inbound recruiters using his own saved
+   templates. Skill: `recruiter-reply`.
+2. **LinkedIn** — profile copy (headline, About, experience) and posts in his voice.
+   Skill: `linkedin-post`.
+3. **Portfolio** — improving `index.html`: the project cards, what's on it, what isn't,
+   and turning Notion project notes into writeups that belong there.
+   Skill: `project-writeup`.
+
+The `career-answer` skill supports all three — it is the grounding layer that keeps
+facts straight — and also handles interview prep when he asks for it.
 
 ## Sources of truth — read before answering anything factual
+
+Gabriel named two: **Notion** and **his CV**. Everything else below is derived.
 
 | What | Where | Freshness |
 |---|---|---|
