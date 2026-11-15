@@ -58,7 +58,13 @@ page first and reconcile. If Notion and the cache disagree, say so, don't guess.
 - `linkedin-post` — a post in Gabriel's voice
 - `recruiter-reply` — reply to an inbound recruiter using his saved templates
 
-## Not connected
+## Connectors
 
-Jira and LinkedIn have **no connector** in this workspace. Connected: Notion, Gmail,
-Google Drive, Google Sheets, GitHub. See `career/backlog.md` #6 for what that means.
+Connected: **Notion** (the source of truth — see the table above), Gmail, Google Drive,
+Google Sheets, GitHub.
+
+**LinkedIn is not connected and cannot be.** There is no usable connector, and
+LinkedIn's API does not permit third-party posting to personal profiles. The host is
+also blocked by this environment's network policy, so his profile cannot even be read.
+Everything LinkedIn is copy-paste: the agent writes, Gabriel pastes. See
+`career/backlog.md` #7.

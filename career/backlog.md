@@ -97,17 +97,21 @@ doesn't link the portfolio at all.
 
 ---
 
-## 7. 🟢 Jira and LinkedIn aren't connected — and LinkedIn can't be
+## 7. 🟢 LinkedIn is unreachable — by connector and by network
 
-Connected in this workspace: Notion, Gmail, Google Drive, Google Sheets, GitHub.
-Not connected: **Jira**, **LinkedIn**.
+Connected in this workspace: **Notion**, Gmail, Google Drive, Google Sheets, GitHub.
+Notion is the one that matters and it is already wired up as the source of truth.
 
-- **Jira** — a connector exists; it just isn't installed. Once it is, the agent can pull
-  his tickets and turn delivered work into CV bullets and project writeups automatically.
-  That's the real win: his best evidence is in sprints nobody writes down.
-- **LinkedIn** — there is no usable connector, and LinkedIn's API doesn't permit
-  third-party posting for personal profiles. **This will stay copy-paste.** The agent
-  writes the post; he pastes it. Treat anything promising otherwise as wrong.
+**LinkedIn is not reachable, two ways over:**
+- No usable connector exists, and LinkedIn's API doesn't permit third-party posting to
+  personal profiles.
+- `www.linkedin.com` doesn't resolve from this environment — the network policy denies
+  the host. Allowing it wouldn't help much: LinkedIn serves a sign-in wall or a 999
+  block to unauthenticated clients, so the profile still wouldn't be readable.
+
+**This will stay copy-paste in both directions.** To work on his profile, Gabriel
+pastes the current headline / About / experience text in. To publish a post, the agent
+writes it and he pastes it out. Treat anything promising otherwise as wrong.
 
 ---
 
